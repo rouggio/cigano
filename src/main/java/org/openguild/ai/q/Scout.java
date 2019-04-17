@@ -1,37 +1,28 @@
 package org.openguild.ai.q;
 
-public class Scout {
+import java.util.Set;
 
-    private int state;
+class Scout {
 
-    private Factor factor;
+    private Exploreable exploreable;
 
-    public Scout(int initialState) {
-        this.state = initialState;
+    void setExploreable(Exploreable exploreable) {
+        this.exploreable = exploreable;
     }
 
-    public int getState() {
-        return state;
+    void explore() {
+        Set<String> dimensions = exploreable.getDimensions();
+        for (String dimension : dimensions) {
+            exploreTrend(dimension, false);
+            exploreTrend(dimension, true);
+        }
     }
 
-    public Factor getFactor() {
-        return factor;
-    }
-
-    public void setFactor(Factor factor) {
-        this.factor = factor;
-    }
-
-    public void explore() {
-        exploreTrend(false);
-        exploreTrend(true);
-    }
-
-    private void exploreTrend(boolean ascending) {
-        int bestResult = factor.get(state);
+    private void exploreTrend(String dimension, boolean ascending) {
+        int bestResult = exploreable.getOutput();
         boolean progress;
         do {
-            int result = attempt(ascending);
+            int result = attempt(dimension, ascending);
             if (result >= bestResult) {
                 progress = true;
                 bestResult = result;
@@ -39,14 +30,16 @@ public class Scout {
                 progress = false;
             }
         } while (progress);
-        attempt(!ascending);
+        attempt(dimension, !ascending);
     }
 
-    private int attempt(boolean ascending) {
-        int newState = ascending ? state + 1 : state - 1;
-        if (factor.containsKey(newState)) {
-            state = newState;
+    private int attempt(String dimension, boolean ascending) {
+        int dimensionValue = exploreable.getState(dimension);
+        int newState = ascending ? dimensionValue + 1 : dimensionValue - 1;
+
+        if (exploreable.admitsInput(dimension, newState)) {
+            exploreable.setState(dimension, newState);
         }
-        return factor.get(state);
+        return exploreable.getOutput();
     }
 }
