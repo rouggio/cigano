@@ -1,8 +1,8 @@
-package org.openguild.ai.q;
+package org.openguild.cigano;
 
 import java.util.*;
 
-public class MappingFunctionExploreable implements Exploreable {
+public class MappingFunctionExplorable implements Explorable {
 
     private Map<String, Integer> state = new HashMap<>();
 
@@ -10,7 +10,7 @@ public class MappingFunctionExploreable implements Exploreable {
 
     private Map<String, Map<Integer, Integer>> dimensionToMappingFunction = new HashMap<>();
 
-    MappingFunctionExploreable(String... dimensions) {
+    MappingFunctionExplorable(String... dimensions) {
         this.dimensions.addAll(Arrays.asList(dimensions));
     }
 

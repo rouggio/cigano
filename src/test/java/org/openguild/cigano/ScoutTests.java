@@ -1,15 +1,15 @@
-package org.openguild.ai.q;
+package org.openguild.cigano;
 
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class TestQL {
+public class ScoutTests {
 
     @Test
     public void fromOneToTen() {
         Scout scout = new Scout();
-        MappingFunctionExploreable exploreable = new MappingFunctionExploreable(
+        MappingFunctionExplorable exploreable = new MappingFunctionExplorable(
                 "A",
                 "B"
         );
@@ -33,7 +33,7 @@ public class TestQL {
         exploreable.addData("B", 602, 14);
         exploreable.addData("B", 603, 13);
 
-        scout.setExploreable(exploreable);
+        scout.setExplorable(exploreable);
         scout.explore();
 
         assertEquals(4, exploreable.getState("A"));

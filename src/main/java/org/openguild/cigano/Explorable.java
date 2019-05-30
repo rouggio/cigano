@@ -1,8 +1,8 @@
-package org.openguild.ai.q;
+package org.openguild.cigano;
 
 import java.util.Set;
 
-public interface Exploreable {
+public interface Explorable {
 
     int getState(String dimension);
 
